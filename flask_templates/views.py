@@ -5,6 +5,8 @@ from flask import render_template, flash, redirect, request, url_for, g
 from flask_login import login_required, login_user, logout_user, current_user
 from .forms import LoginForm
 from .models import User
+from .utils import support_jsonp
+import json
 
 
 @app.before_request
@@ -44,4 +46,8 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/api/v1/hello')
-def logout():
+@support_jsonp
+def hello():
+    json_text = json.dumps({'hello': 'world'})
+
+    return json_text
